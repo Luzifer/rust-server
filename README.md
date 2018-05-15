@@ -12,13 +12,11 @@ This repository contains a Docker setup for [Linux Game Server Managers](https:/
 - Edit `/data/rust/rustserver` script and exchange RCON password and other configuration variables
 - Edit `/data/rust/serverfiles/server/rust-server/cfg/server.cfg` and set the description, image and URL of your server
 - Start your server:
-
-```
-docker run -d -p 28015:28015/udp -p 28016:28016 \
-           -v /data/rust:/home/rustserver --name rust \
-           luzifer/rust-server start
-```
-
+    ```
+    docker run -d -p 28015:28015/udp -p 28016:28016 \
+              -v /data/rust:/home/rustserver --name rust \
+              luzifer/rust-server start
+    ```
 - To stop the server I recommend using the RCON console and the command `quit`. This will ensure the server has created a proper savegame.
 - To update the server stop it and afterwards execute the update:  
   `docker run --rm -ti -v /data/rust:/home/rustserver luzifer/rust-server update`
