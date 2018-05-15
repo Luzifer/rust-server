@@ -1,14 +1,47 @@
 FROM debian
 
+ENV LC_ALL=C \
+    LC_CTYPE=C \
+    LANG=C
+
 RUN set -ex \
  && dpkg --add-architecture i386 \
  && apt-get update \
- && apt-get install -y mailutils postfix curl wget file bzip2 gzip unzip bsdmainutils python util-linux tmux lib32gcc1 libstdc++6 libstdc++6:i386 \
- && adduser --disabled-password rustserver
+ && apt-get install -y \
+      bc \
+      binutils \
+      bsdmainutils \
+      bzip2 \
+      ca-certificates \
+      curl \
+      file \
+      gzip \
+      lib32gcc1 \
+      lib32z1 \
+      libstdc++6 \
+      libstdc++6:i386 \
+      locales \
+      mailutils \
+      postfix \
+      procps \
+      python \
+      tmux \
+      unzip \
+      util-linux \
+      wget \
+ && adduser --disabled-password rustserver \
+ && echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen \
+ && locale-gen \
+ && update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
 
-ADD https://gameservermanagers.com/dl/rustserver /opt/rustserver
+WORKDIR /tmp
+
+ADD https://linuxgsm.com/dl/linuxgsm.sh /tmp/linuxgsm.sh
 RUN set -ex \
- && chmod 755 /opt/rustserver
+ && chmod 0644 linuxgsm.sh \
+ && su -c "bash linuxgsm.sh rustserver" rustserver \
+ && chmod 0755 rustserver \
+ && mv /tmp/rustserver /opt/rustserver
 
 USER rustserver
 WORKDIR /home/rustserver
