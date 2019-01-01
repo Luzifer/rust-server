@@ -16,6 +16,7 @@ RUN set -ex \
       curl \
       file \
       gzip \
+      jq \
       lib32gcc1 \
       lib32z1 \
       libstdc++6 \
